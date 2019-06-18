@@ -25,7 +25,7 @@ public class leggiAuleCsv {
         line = br.readLine();   // skip della prima riga con le intestazioni
 
         Aule myAule = new Aule();
-        
+      
         int i=0;
         System.out.println("Elenco aule lette dal file "+ csvFile);
         System.out.println("");

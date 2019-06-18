@@ -1,10 +1,6 @@
 
-//package aule;
-import java.awt.*;
-import java.awt.event.*;
-
 /*
-*** Aula: classe che rappresenta un'aula con i dati sonori e le coordinate 
+*** Aula: classe che rappresenta un'aula con i dati sonori e le 4 coordinate 
 */
 public class Aula  {
 	 private String nome;	// nome aula
@@ -23,8 +19,10 @@ public class Aula  {
          
          private int x4;
          private int y4;
-         
-// Costruttore della classe Aula
+        
+/*
+*** Costruttore della classe Aula
+*/
 public Aula(String nome, int piano,float db, float tr,int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4) 
 {
  setNome(nome);
@@ -44,6 +42,7 @@ public Aula(String nome, int piano,float db, float tr,int x1,int y1,int x2,int y
  setX4(x4);
  setY4(y4);
 } 
+
 /*
 *** metodi getter e setter
 */
@@ -156,6 +155,10 @@ public void setY4(int y4)
   this.y4 = y4;
 }
 
+
+/*
+*** SiPresenta()
+*/
 public void SiPresenta()
  {
   System.out.println("---------------------------------------");
@@ -165,7 +168,10 @@ public void SiPresenta()
  
  }
 
-public String toString()
+/*
+*** toString()
+*/
+ public String toString()
  {
   String myStr;
   myStr = "|Aula:"+ getNome() + " |piano:" + getPiano() + " |decibel:" + getDb() + " |t.riverbero:" + getTr();
@@ -176,7 +182,5 @@ public String toString()
   myStr = myStr + "|x4:" + getX4() + " y4:" + getY4();
   return myStr;
  }
- 
 // end Aula
-
 }
