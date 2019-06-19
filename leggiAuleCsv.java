@@ -12,7 +12,7 @@ import java.io.IOException;
 
 /*
 *** leggiAuleCsv: Legge l'elenco delle aule con i dati presenti su file csv e li carica su un vettore di oggetti di classe Aula
-*/
+
 public class leggiAuleCsv {
 
     public static void main(String[] args) {
@@ -24,13 +24,19 @@ public class leggiAuleCsv {
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
         line = br.readLine();   // skip della prima riga con le intestazioni
 
+        ScegliPianoFrame sp = new ScegliPianoFrame();
+   //     sp.Disegna();
+        int piano = sp.getPiano();
+        System.out.println("Scelto piano "+ piano);
+        
         Aule myAule = new Aule();
-      
+
         int i=0;
         System.out.println("Elenco aule lette dal file "+ csvFile);
         System.out.println("");
         System.out.println("---------------------------------------");
-        while ((line = br.readLine()) != null) {
+        while ((line = br.readLine()) != null) 
+           {
                 String[] dati = line.split(cvsSplitBy); // use comma as separator
 		int k=0;
  		String myNome   = dati[k++];    // nome
@@ -70,16 +76,18 @@ public class leggiAuleCsv {
                 String mySY4 = dati[k++]; 
         
                 int myY4 = Integer.parseInt(mySY4);
-                          
-                Aula a1 = new Aula(myNome, myPiano, myDb, myTr, myX1, myY1, myX2, myY2, myX3, myY3, myX4, myY4 );
-  
-                myAule.aggiungi(a1);
-                i++;
+              
+              if  (myPiano == 2) // per ora solo secondo piano
+               {
+                    Aula a1 = new Aula(myNome, myPiano, myDb, myTr, myX1, myY1, myX2, myY2, myX3, myY3, myX4, myY4 );
+                    myAule.aggiungi(a1);
+                    i++;
+               }
             }
             System.out.println("lette correttamente " + i + " aule");
             
-            myAule.leggi();
-            myAule.Disegna();
+  //          myAule.log();
+//            myAule.Disegna();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,3 +96,4 @@ public class leggiAuleCsv {
     }
 
  }
+*/

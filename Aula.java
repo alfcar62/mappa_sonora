@@ -1,4 +1,7 @@
 
+import java.awt.Color;
+
+
 /*
 *** Aula: classe che rappresenta un'aula con i dati sonori e le 4 coordinate 
 */
@@ -182,5 +185,41 @@ public void SiPresenta()
   myStr = myStr + "|x4:" + getX4() + " y4:" + getY4();
   return myStr;
  }
+ 
+ /*
+*** ritorna il colore associato al valore in decibel
+*** db < 20-> verde
+*** db > 25-> rosso
+*** altrimenti giallo
+*/
+Color getColoreDb()    
+    { 
+        Color myColor;
+    
+      if (this.db < 20)
+          myColor = Color.green;
+      else if (this.db > 25) 
+          myColor = Color.red;
+      else myColor = Color.yellow;
+        return myColor;
+    }
+ 
+/*
+*** ritorna il colore associato al valore del tempo di riverbero
+*** tr < 4-> verde
+*** tr > 5-> rosso
+*** altrimenti giallo
+*/
+Color getColoreTr()     
+    { 
+        Color myColor;
+   
+        if (this.tr < 4)
+          myColor = Color.green;
+        else if (this.tr > 5) 
+          myColor = Color.red;
+        else myColor = Color.yellow;
+        return myColor;
+   } 
 // end Aula
 }
