@@ -9,12 +9,15 @@ public class AulePanel extends JPanel
       {
         System.out.println("Entro in AulePanel() ");
         myAule = new Aule(piano);
-        this.piano = piano;
+        setPiano(piano);
         System.out.println("size="+ myAule.getSize());
         System.out.println("Esco da AulePanel() ");
       }
-
-
+ 
+public void setPiano(int p)
+        {
+           this.piano = p;
+        } 
  /*
  *** ripristina la lettura da file delle aule
  */ 
@@ -42,6 +45,7 @@ public void paintComponent(Graphics g)
   System.out.println("size="+ myAule.getSize());
  
   strPiano =  "Piano: " + this.piano;
+  System.out.println("strPiano="+ strPiano);
  
   g.setColor(Color.black);
   g.drawString(strPiano,20,20);

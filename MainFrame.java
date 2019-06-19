@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class MainFrame extends JFrame implements ActionListener
 {
-   private int piano = 0;
+   private int piano;
    private JPanel pan;
    private AulePanel aulep;
    private JComboBox cbPiani;
@@ -67,13 +67,13 @@ private void initCombo()
     if (pulsante.equals("Scegli"))
       {
         int piano= cbPiani.getSelectedIndex();
-        setPiano(piano);
+        aulep.setPiano(piano);
+        this.setPiano(piano);
         System.out.println("Scelto nuovo piano:"+piano);
         aulep.ripristina(piano);
+        aulep.ripristina(piano); // strano doverlo fare 2 volte!
         aulep.revalidate();
-        aulep.repaint();
-  //      this.revalidate();
-   //     this.repaint();
+        aulep.repaint();    
        }
     System.out.println("esco da MainFrame()");
     //

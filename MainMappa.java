@@ -11,7 +11,8 @@
 class MainMappa {
     public static void main(String[] args) 
        {       
-         MainFrame f = new MainFrame(2); //piano 2 inizialmente
+         MainFrame f = new MainFrame(1); //piano 2 inizialmente
+         f.setPiano(1);
          f.setTitle("Mappa Sonora");
          f.setSize(800,800);
          f.setVisible(true);
