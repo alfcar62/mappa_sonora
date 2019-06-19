@@ -6,13 +6,13 @@ public class AulePanel extends JPanel
  private Aule myAule; 
  private int piano;   
  public AulePanel(int piano)
-      {
-        System.out.println("Entro in AulePanel() ");
-        myAule = new Aule(piano);
-        setPiano(piano);
-        System.out.println("size="+ myAule.getSize());
-        System.out.println("Esco da AulePanel() ");
-      }
+ {
+   System.out.println("Entro in AulePanel() ");
+   myAule = new Aule(piano);
+   setPiano(piano);
+   System.out.println("size="+ myAule.getSize());
+   System.out.println("Esco da AulePanel() ");
+ }
  
 public void setPiano(int p)
         {
@@ -23,11 +23,31 @@ public void setPiano(int p)
  */ 
   public void ripristina(int piano)
       {
-        myAule.cancella();
+        System.out.println("-------------------------");
+        System.out.println("Entro in AulePanel.ripristina()");
+        int size = myAule.getSize();
+        System.out.println("size="+size);
+        for (int i=0;i< size;i++)
+         { 
+            System.out.println("da cancellare aula [ " + i+"]="+myAule.getAula(i));
+         }
+        for (int i=size-1;i>=0 ;i--)
+         { 
+            System.out.println("cancellazione aula [ " + i+"]="+myAule.getAula(i));
+            myAule.cancella(i);
+         }
         myAule.leggiDaFile(piano);
+        System.out.println("Esco da AulePanel.ripristina()");
+        System.out.println("-------------------------");
+      
       } 
+ 
   
-public void paintComponent(Graphics g)
+/*
+*** paintComponent(): Metodo invocato automaticamente 
+*** alla creazione del pannello AulePanel, che visualizza la mappa sul Pannello
+*/
+  public void paintComponent(Graphics g)
 {
  int X1,Y1,X2,Y2,X3,Y3,X4,Y4;
 
@@ -37,9 +57,8 @@ public void paintComponent(Graphics g)
   Color myColor;
   String strPiano;
   
-  
   super.paintComponent(g);
-  
+  System.out.println("--------------------------");
   System.out.println("Entro in paintCompoment() ");
   
   System.out.println("size="+ myAule.getSize());
@@ -65,9 +84,9 @@ public void paintComponent(Graphics g)
       
       // scrive il nome dell'aula
       g.setColor(Color.black);
-      g.drawString(a.getNome(),X1,Y1-5);
-      String sPiano = "piano" + Integer.valueOf(a.getPiano());
-      g.drawString(sPiano,X1+100,Y1-5);
+      g.drawString("Aula:"+a.getNome(),X1,Y1-5);
+      String sPiano = "piano:" + Integer.valueOf(a.getPiano());
+      g.drawString(sPiano,X1+150,Y1-5);
       // disegna il rettangolo esterno 
       int width= X2-X1;
       int heigth = Y3-Y2;
@@ -106,13 +125,14 @@ public void paintComponent(Graphics g)
       g.drawLine(X4+d,Y4-d,X1+d,Y1+d);
      
       // scrive i dati sui decibel sonori al centro
-      g.drawString("decibel:" + a.getDb(),X1+40,Y1+40);
+      g.drawString("Decibel:" + a.getDb(),X1+40,Y1+40);
       
        // scrive i dati sul tempo di riverbero al bordo
-      g.drawString("t.riverbero:" + a.getTr(),X1+10,Y1+15); 
+      g.drawString("T.Riverbero:" + a.getTr(),X1+10,Y1+15); 
      }
      
     System.out.println("Esco da paintCompoment() "); 
+    System.out.println("--------------------------");
    }
 
 
