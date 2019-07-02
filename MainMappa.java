@@ -6,20 +6,16 @@
 
 /**
  *
- * @author Windows7
+ * Main
  */
 class MainMappa {
     public static void main(String[] args) 
-       {       
-         MainFrame f = new MainFrame(1); //piano 2 inizialmente
-         f.setPiano(1);
+       {
+         int piano = 0;  // si parte con il piano terra
+         MainFrame f = new MainFrame(piano); 
+         f.setPiano(piano); 
          f.setTitle("Mappa Sonora");
-         f.setSize(800,800);
+         f.setSize(1600,1600);
          f.setVisible(true);
-         
-  //       int piano = spf.getPiano();
-  //       System.out.println("Scelto piano "+ piano);
-   //      AuleFrame af = new AuleFrame(piano);
-   //       AulePanel ap = new AulePanel(piano);
        }
 } 

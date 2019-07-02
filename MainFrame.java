@@ -1,8 +1,16 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import javax.imageio.*;
+import java.io.*;
 
-
+/*
+*** MainFrame
+*** classe che rappresenta il Frame principale
+*** Conterrà 
+*** un pannello superiore per la scelta del piano
+*** un pannello centrale con la mappa delle aule
+*/
 public class MainFrame extends JFrame implements ActionListener
 {
    private int piano;
@@ -14,6 +22,8 @@ public class MainFrame extends JFrame implements ActionListener
    public MainFrame(int piano)
     {
      super("scegli Piano");
+     System.out.println("--------------------------------");
+     System.out.println("Entro in MainFrame piano="+piano);
      pan = new JPanel();
      aulep = new AulePanel(piano);
      cbPiani = new JComboBox();
@@ -30,7 +40,9 @@ public class MainFrame extends JFrame implements ActionListener
      add(pan,"North");
      add(aulep,"Center");
      btnCambiaPiano.addActionListener(this);
+     
      System.out.println("esco da MainFrame()");
+     System.out.println("--------------------------------");
     }      
 
 public int getPiano()
@@ -62,21 +74,22 @@ private void initCombo()
 */
    public void actionPerformed(ActionEvent e)
  {
+    System.out.println("--------------------------------");
     System.out.println("Entro in actionPerformed() ");
     String pulsante = e.getActionCommand();
     if (pulsante.equals("Scegli"))
       {
-        int piano= cbPiani.getSelectedIndex();
-        aulep.setPiano(piano);
-        this.setPiano(piano);
-        System.out.println("Scelto nuovo piano:"+piano);
+        int new_piano= cbPiani.getSelectedIndex();      
+        System.out.println("Scelto nuovo piano:"+new_piano);
+        aulep.setPiano(new_piano);
+        this.setPiano(new_piano);
+        
         aulep.ripristina(piano);
-        aulep.ripristina(piano); // strano doverlo fare 2 volte!
         aulep.revalidate();
-        aulep.repaint();    
+        aulep.repaint();         
        }
-    System.out.println("esco da MainFrame()");
-    //
+    System.out.println("esco da ActionPerformed()");
+    System.out.println("--------------------------------");
  }
    
 }

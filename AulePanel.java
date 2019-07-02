@@ -1,10 +1,21 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.imageio.*;
+import java.awt.image.*;
+import java.io.*;
+import java.awt.geom.AffineTransform;
 
+/*
+*** AulePanel: Pannello che contiene la mappa delle aule di un determinato piano
+*/
 public class AulePanel extends JPanel
 {
  private Aule myAule; 
- private int piano;   
+ private int piano; 
+ private ZoomAndPanListener zoomAndPanListener; 
+ private boolean init = true;
+
+ 
  public AulePanel(int piano)
  {
    System.out.println("Entro in AulePanel() ");
@@ -12,12 +23,18 @@ public class AulePanel extends JPanel
    setPiano(piano);
    System.out.println("size="+ myAule.getSize());
    System.out.println("Esco da AulePanel() ");
+   
+   this.zoomAndPanListener = new ZoomAndPanListener(this);
+   this.addMouseListener(zoomAndPanListener);
+   this.addMouseMotionListener(zoomAndPanListener);
+   this.addMouseWheelListener(zoomAndPanListener);
  }
  
 public void setPiano(int p)
-        {
+ {
            this.piano = p;
-        } 
+ } 
+
  /*
  *** ripristina la lettura da file delle aule
  */ 
@@ -41,8 +58,11 @@ public void setPiano(int p)
         System.out.println("-------------------------");
       
       } 
- 
   
+  
+
+ 
+ 
 /*
 *** paintComponent(): Metodo invocato automaticamente 
 *** alla creazione del pannello AulePanel, che visualizza la mappa sul Pannello
@@ -52,12 +72,38 @@ public void setPiano(int p)
  int X1,Y1,X2,Y2,X3,Y3,X4,Y4;
 
   Aula a;
-  int peso=20; // fattore di moltiplicazione per la dimensione delle aule
+  int peso=1; // fattore di moltiplicazione per la dimensione delle aule
   int d = 20;  // distanza dal bordo
   Color myColor;
   String strPiano;
   
   super.paintComponent(g);
+  
+  // inizio gestione panning e zooming
+  Graphics2D g1 = (Graphics2D) g;
+ 
+  if (init) {
+            // Initialize the viewport by moving the origin to the center of the window,
+            // and inverting the y-axis to point upwards.
+            init = false;
+            Dimension dim = getSize();
+            int xc = dim.width / 2;
+            int yc = dim.height / 2;
+  //          g1.translate(xc, yc);
+  //          g1.scale(1, -1);
+            // Save the viewport to be updated by the ZoomAndPanListener
+            zoomAndPanListener.setCoordTransform(g1.getTransform());
+        } else {
+            // Restore the viewport after it was updated by the ZoomAndPanListener
+            g1.setTransform(zoomAndPanListener.getCoordTransform());
+        }
+      Font font = g1.getFont();
+      AffineTransform affineTransform = new AffineTransform();
+//      affineTransform.scale(1, -1);
+      g1.setFont(font.deriveFont(affineTransform));
+// fine  gestione panning e zooming
+  
+  
   System.out.println("--------------------------");
   System.out.println("Entro in paintCompoment() ");
   
@@ -66,6 +112,47 @@ public void setPiano(int p)
   strPiano =  "Piano: " + this.piano;
   System.out.println("strPiano="+ strPiano);
  
+  /* 
+  *** disegna l'immagine di background con la planimetria del piano scelto
+  */
+  String strFile = "";
+   switch(this.piano)
+    { 
+        case 0:
+        strFile = "plan_p0.jpg";
+         break;
+       case 1: 
+         strFile = "plan_p1.jpg";
+         break;
+       case 2: 
+       //  strFile = new String("Plan_2piano.jpg");
+       break;
+        case 3:
+        case 4:
+      //   strFile = new String("Plan_3-4piano.jpg");
+       break;
+    }
+   File fileBackground = new File(strFile);
+   Image img;
+  
+  try
+  {      
+   img=ImageIO.read(fileBackground); 
+   int imgW = img.getWidth(this);
+   int imgH = img.getHeight(this);
+   System.out.println("image Width= "+ imgW + " Heigth="+imgH);
+   g.drawImage(img, 0, 0, this); 
+   System.out.println("draw image");
+  }
+  catch(IOException e)
+    {
+         img=null;
+         System.out.println("exception image");
+    }
+  
+
+// disegna le aule del piano
+  
   g.setColor(Color.black);
   g.drawString(strPiano,20,20);
    
