@@ -103,7 +103,7 @@ public void setPiano(int p)
       g1.setFont(font.deriveFont(affineTransform));
 // fine  gestione panning e zooming
   
-  
+
   System.out.println("--------------------------");
   System.out.println("Entro in paintCompoment() ");
   
@@ -125,11 +125,11 @@ public void setPiano(int p)
          strFile = "plan_p1.jpg";
          break;
        case 2: 
-       //  strFile = new String("Plan_2piano.jpg");
+        strFile = "plan_p2.jpg";
        break;
         case 3:
         case 4:
-      //   strFile = new String("Plan_3-4piano.jpg");
+            strFile = "plan_p34.jpg";
        break;
     }
    File fileBackground = new File(strFile);
