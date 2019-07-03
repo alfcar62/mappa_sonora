@@ -15,7 +15,7 @@ class MainMappa {
          MainFrame f = new MainFrame(piano); 
          f.setPiano(piano); 
          f.setTitle("Mappa Sonora");
-         f.setSize(1600,1600);
+         f.setSize(1200,780);
          f.setVisible(true);
        }
 } 

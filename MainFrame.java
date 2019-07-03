@@ -11,7 +11,8 @@ import java.io.*;
 *** un pannello superiore per la scelta del piano
 *** un pannello centrale con la mappa delle aule
 */
-public class MainFrame extends JFrame implements ActionListener
+public class MainFrame extends JFrame 
+        implements ActionListener
 {
    private int piano;
    private JPanel pan;
@@ -28,10 +29,12 @@ public class MainFrame extends JFrame implements ActionListener
      aulep = new AulePanel(piano);
      cbPiani = new JComboBox();
      btnCambiaPiano = new JButton("Scegli");
-     
+ //    this.pack();
+     this.pack();
      this.setPiano(piano);
      System.out.println("entro in MainFrame()");
      addWindowListener(new GestionePiani());
+     
      initCombo();
      aulep.setBackground(Color.WHITE);
      pan.add(new Label("Piano: "));
@@ -45,6 +48,9 @@ public class MainFrame extends JFrame implements ActionListener
      System.out.println("--------------------------------");
     }      
 
+ 
+
+        
 public int getPiano()
   {  
    return (piano);   
@@ -85,8 +91,9 @@ private void initCombo()
         this.setPiano(new_piano);
         
         aulep.ripristina(piano);
+
         aulep.revalidate();
-        aulep.repaint();         
+        this.repaint();
        }
     System.out.println("esco da ActionPerformed()");
     System.out.println("--------------------------------");

@@ -4,19 +4,22 @@ import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
 import java.awt.geom.AffineTransform;
+import java.awt.event.*;
 
 /*
 *** AulePanel: Pannello che contiene la mappa delle aule di un determinato piano
 */
 public class AulePanel extends JPanel
+        implements  MouseListener, MouseMotionListener
 {
  private Aule myAule; 
  private int piano; 
  private ZoomAndPanListener zoomAndPanListener; 
  private boolean init = true;
+ private BufferedImage img;
 
  
- public AulePanel(int piano)
+ public AulePanel(int piano) 
  {
    System.out.println("Entro in AulePanel() ");
    myAule = new Aule(piano);
@@ -28,6 +31,9 @@ public class AulePanel extends JPanel
    this.addMouseListener(zoomAndPanListener);
    this.addMouseMotionListener(zoomAndPanListener);
    this.addMouseWheelListener(zoomAndPanListener);
+   
+   this.addMouseListener(this); // in ascolto del mouse
+   this.addMouseMotionListener(this);
  }
  
 public void setPiano(int p)
@@ -59,9 +65,7 @@ public void setPiano(int p)
       
       } 
   
-  
 
- 
  
 /*
 *** paintComponent(): Metodo invocato automaticamente 
@@ -86,11 +90,12 @@ public void setPiano(int p)
             // Initialize the viewport by moving the origin to the center of the window,
             // and inverting the y-axis to point upwards.
             init = false;
-            Dimension dim = getSize();
-            int xc = dim.width / 2;
-            int yc = dim.height / 2;
+ //           Dimension dim = getSize();
+ //           int xc = dim.width / 2;
+ //           int yc = dim.height / 2;
   //          g1.translate(xc, yc);
-  //          g1.scale(1, -1);
+
+   //         g1.scale(1, -1);
             // Save the viewport to be updated by the ZoomAndPanListener
             zoomAndPanListener.setCoordTransform(g1.getTransform());
         } else {
@@ -133,14 +138,17 @@ public void setPiano(int p)
        break;
     }
    File fileBackground = new File(strFile);
-   Image img;
-  
+   BufferedImage img;
+   
+   
   try
   {      
    img=ImageIO.read(fileBackground); 
    int imgW = img.getWidth(this);
    int imgH = img.getHeight(this);
    System.out.println("image Width= "+ imgW + " Heigth="+imgH);
+   this.setLayout(new BorderLayout());
+ 
    g.drawImage(img, 0, 0, this); 
    System.out.println("draw image");
   }
@@ -159,7 +167,9 @@ public void setPiano(int p)
   for (int i=0;i<myAule.getSize();i++)
    {
       a = (Aula) myAule.getAula(i);
-
+      Polygon po = new Polygon();
+      Polygon pc = new Polygon();
+        
       X1=a.getX1() * peso;
       Y1=a.getY1() * peso;
       X2=a.getX2() * peso;
@@ -169,47 +179,70 @@ public void setPiano(int p)
       X4=a.getX4() * peso;
       Y4=a.getY4() * peso;
       
+      po.addPoint(X1, Y1);
+      po.addPoint(X2, Y2);
+      po.addPoint(X3, Y3);
+      po.addPoint(X4, Y4);
+      
       // scrive il nome dell'aula
       g.setColor(Color.black);
       g.drawString("Aula:"+a.getNome(),X1,Y1-5);
       String sPiano = "piano:" + Integer.valueOf(a.getPiano());
       g.drawString(sPiano,X1+150,Y1-5);
-      // disegna il rettangolo esterno 
-      int width= X2-X1;
-      int heigth = Y3-Y2;
+      
+// disegna il rettangolo esterno 
+ //     int width= X2-X1;
+//      int heigth = Y3-Y2;
     
       /* 
       *** settaggio colore in base al tempo di riverbero
       */
       myColor = a.getColoreTr();
       g.setColor(myColor);
-      g.fillRect(X1, Y1, width, heigth);
+      g.fillPolygon(po);
+//      g.fillRect(X1, Y1, width, heigth);
       
      // disegna il rettangolo centrale 
-      width= (X2-d) - (X1+d);
-      heigth = (Y3-d)-(Y2+d);
+      if (X1 == X4)  // aula dritta 
+       {   
+         pc.addPoint(X1+d, Y1+d);
+         pc.addPoint(X2-d, Y2+d);
+         pc.addPoint(X3-d, Y3-d);
+         pc.addPoint(X4+d, Y4-d);
+      }
+      else // aula storta
+      {   
+         pc.addPoint(X1, Y1+d);
+         pc.addPoint(X2-d, Y2);
+         pc.addPoint(X3, Y3-d);
+         pc.addPoint(X4+d, Y4);
+      }
       
       /* 
       *** settaggio colore in base ai decibel
       */  
       myColor = a.getColoreDb();
-  
+      
       g.setColor(myColor);
-      g.fillRect(X1+d, Y1+d, width, heigth);
+      g.fillPolygon(pc);
+ //     g.fillRect(X1+d, Y1+d, width, heigth);
+      
      // disegna i bordi esterni dell'aula
       g.setColor(Color.black);
-      g.drawLine(X1,Y1,X2,Y2);
-      g.drawLine(X2,Y2,X3,Y3);
-      g.drawLine(X3,Y3,X4,Y4);
-      g.drawLine(X4,Y4,X1,Y1);
+      g.drawPolygon(po);
+ //     g.drawLine(X1,Y1,X2,Y2);
+ //     g.drawLine(X2,Y2,X3,Y3);
+ //     g.drawLine(X3,Y3,X4,Y4);
+ //     g.drawLine(X4,Y4,X1,Y1);
      
       // disegna i bordi interni dell'aula
       
       g.setColor(Color.black);
-      g.drawLine(X1+d,Y1+d,X2-d,Y2+d);
-      g.drawLine(X2-d,Y2+d,X3-d,Y3-d);
-      g.drawLine(X3-d,Y3-d,X4+d,Y4-d);
-      g.drawLine(X4+d,Y4-d,X1+d,Y1+d);
+      g.drawPolygon(pc);
+//      g.drawLine(X1+d,Y1+d,X2-d,Y2+d);
+ //     g.drawLine(X2-d,Y2+d,X3-d,Y3-d);
+ //     g.drawLine(X3-d,Y3-d,X4+d,Y4-d);
+ //     g.drawLine(X4+d,Y4-d,X1+d,Y1+d);
      
       // scrive i dati sui decibel sonori al centro
       g.drawString("Decibel:" + a.getDb(),X1+40,Y1+40);
@@ -222,5 +255,44 @@ public void setPiano(int p)
     System.out.println("--------------------------");
    }
 
+   public void mouseExited(MouseEvent e)
+    {    
+    }     
+  
+  public void mouseEntered(MouseEvent e)
+    {    
+    }
+  
+  public void mousePressed(MouseEvent e)
+    {    
+    }
+  public void mouseReleased(MouseEvent e)
+    {    
+    }
+  
+  public void mouseMoved(MouseEvent e)
+    {    
+    }
+  public void mouseDragged(MouseEvent e)
+    {    
+    }
+  
 
+   public void mouseClicked(MouseEvent e)
+   {  
+       Aula a;
+       
+       System.out.println("x rel="+e.getX()+"y rel="+ e.getY()); 
+       System.out.println("x abs ="+e.getXOnScreen()+"y abs="+ e.getYOnScreen()); 
+       for (int i=0;i<myAule.getSize();i++)
+         {
+            a = (Aula) myAule.getAula(i);
+   //         a.SiPresenta();
+            if (e.getX() > a.getX1()  && 
+                e.getX() < a.getX2()  &&
+                e.getY() > a.getY1()  && 
+                e.getY() < a.getY3()) 
+                System.out.println("cliccato dentro aula "+ a.getNome());     
+         }
+   }
 }
