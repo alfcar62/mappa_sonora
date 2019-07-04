@@ -25,8 +25,7 @@ public class AulePanel extends JPanel
    myAule = new Aule(piano);
    setPiano(piano);
    System.out.println("size="+ myAule.getSize());
-   System.out.println("Esco da AulePanel() ");
-   
+
    this.zoomAndPanListener = new ZoomAndPanListener(this);
    this.addMouseListener(zoomAndPanListener);
    this.addMouseMotionListener(zoomAndPanListener);
@@ -34,6 +33,7 @@ public class AulePanel extends JPanel
    
    this.addMouseListener(this); // in ascolto del mouse
    this.addMouseMotionListener(this);
+   System.out.println("Esco da AulePanel() ");
  }
  
 public void setPiano(int p)
@@ -66,7 +66,6 @@ public void setPiano(int p)
       } 
   
 
- 
 /*
 *** paintComponent(): Metodo invocato automaticamente 
 *** alla creazione del pannello AulePanel, che visualizza la mappa sul Pannello
@@ -83,6 +82,8 @@ public void setPiano(int p)
   
   super.paintComponent(g);
   
+   System.out.println("--------------------------");
+  System.out.println("AulePanel: Entro in paintCompoment() ");
   // inizio gestione panning e zooming
   Graphics2D g1 = (Graphics2D) g;
  
@@ -109,8 +110,7 @@ public void setPiano(int p)
 // fine  gestione panning e zooming
   
 
-  System.out.println("--------------------------");
-  System.out.println("Entro in paintCompoment() ");
+ 
   
   System.out.println("size="+ myAule.getSize());
  
@@ -133,8 +133,10 @@ public void setPiano(int p)
         strFile = "plan_p2.jpg";
        break;
         case 3:
+            strFile = "plan_p3.jpg";
+       break;
         case 4:
-            strFile = "plan_p34.jpg";
+            strFile = "plan_p4.jpg";
        break;
     }
    File fileBackground = new File(strFile);
@@ -157,7 +159,6 @@ public void setPiano(int p)
          img=null;
          System.out.println("exception image");
     }
-  
 
 // disegna le aule del piano
   
@@ -191,18 +192,18 @@ public void setPiano(int p)
       g.drawString(sPiano,X1+150,Y1-5);
       
 // disegna il rettangolo esterno 
- //     int width= X2-X1;
-//      int heigth = Y3-Y2;
-    
+
       /* 
       *** settaggio colore in base al tempo di riverbero
       */
       myColor = a.getColoreTr();
       g.setColor(myColor);
       g.fillPolygon(po);
-//      g.fillRect(X1, Y1, width, heigth);
       
      // disegna il rettangolo centrale 
+     
+      d= (X2-X1) * 20 /100;  // bordo interno del 20% 
+      
       if (X1 == X4)  // aula dritta 
        {   
          pc.addPoint(X1+d, Y1+d);
@@ -212,10 +213,10 @@ public void setPiano(int p)
       }
       else // aula storta
       {   
-         pc.addPoint(X1, Y1+d);
-         pc.addPoint(X2-d, Y2);
+         pc.addPoint(X1+d/4, Y1+d+d/3);
+         pc.addPoint(X2-d, Y2+d/2);
          pc.addPoint(X3, Y3-d);
-         pc.addPoint(X4+d, Y4);
+         pc.addPoint(X4+d, Y4-d/2);
       }
       
       /* 
@@ -225,25 +226,15 @@ public void setPiano(int p)
       
       g.setColor(myColor);
       g.fillPolygon(pc);
- //     g.fillRect(X1+d, Y1+d, width, heigth);
       
      // disegna i bordi esterni dell'aula
       g.setColor(Color.black);
       g.drawPolygon(po);
- //     g.drawLine(X1,Y1,X2,Y2);
- //     g.drawLine(X2,Y2,X3,Y3);
- //     g.drawLine(X3,Y3,X4,Y4);
- //     g.drawLine(X4,Y4,X1,Y1);
-     
+ 
       // disegna i bordi interni dell'aula
       
       g.setColor(Color.black);
       g.drawPolygon(pc);
-//      g.drawLine(X1+d,Y1+d,X2-d,Y2+d);
- //     g.drawLine(X2-d,Y2+d,X3-d,Y3-d);
- //     g.drawLine(X3-d,Y3-d,X4+d,Y4-d);
- //     g.drawLine(X4+d,Y4-d,X1+d,Y1+d);
-     
       // scrive i dati sui decibel sonori al centro
       g.drawString("Decibel:" + a.getDb(),X1+40,Y1+40);
       
@@ -264,27 +255,15 @@ public void setPiano(int p)
     }
   
   public void mousePressed(MouseEvent e)
-    {    
-    }
-  public void mouseReleased(MouseEvent e)
-    {    
-    }
-  
-  public void mouseMoved(MouseEvent e)
-    {    
-    }
-  public void mouseDragged(MouseEvent e)
-    {    
-    }
-  
-
-   public void mouseClicked(MouseEvent e)
-   {  
-       Aula a;
+    {  
+      if (e.getClickCount()>=2)        
+       { 
+        System.out.println("double click"); 
+        Aula a;
        
-       System.out.println("x rel="+e.getX()+"y rel="+ e.getY()); 
-       System.out.println("x abs ="+e.getXOnScreen()+"y abs="+ e.getYOnScreen()); 
-       for (int i=0;i<myAule.getSize();i++)
+        System.out.println("x rel="+e.getX()+"y rel="+ e.getY()); 
+        System.out.println("x abs ="+e.getXOnScreen()+"y abs="+ e.getYOnScreen()); 
+        for (int i=0;i<myAule.getSize();i++)
          {
             a = (Aula) myAule.getAula(i);
    //         a.SiPresenta();
@@ -292,7 +271,43 @@ public void setPiano(int p)
                 e.getX() < a.getX2()  &&
                 e.getY() > a.getY1()  && 
                 e.getY() < a.getY3()) 
-                System.out.println("cliccato dentro aula "+ a.getNome());     
-         }
+                 {
+                  System.out.println("cliccato dentro aula "+ a.getNome());
+                  this.disegna_aula(a);
+                 }
+          }
+       }
+    }
+  
+  
+  public void mouseReleased(MouseEvent e)
+    {    
+    }
+  
+  public void mouseMoved(MouseEvent e)
+    {    
+    }
+ 
+   
+  
+  public void mouseDragged(MouseEvent e)
+    {    
+        System.out.println("dragged"); 
+    }
+  
+   public void mouseClicked(MouseEvent e)
+   {  
+      System.out.println("clicked");
    }
-}
+   
+   public void disegna_aula (Aula a)
+   {
+        System.out.println("entro in disegna_aula()");
+        
+         AulaFrame af = new AulaFrame(a); 
+         
+         af.setTitle("Mappa Sonora aula "+a.getNome());
+         af.setSize(700,700);
+         af.setVisible(true);
+   }
+ }

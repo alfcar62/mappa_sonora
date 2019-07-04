@@ -47,6 +47,28 @@ public Aula(String nome, int piano,float db, float tr,int x1,int y1,int x2,int y
 } 
 
 /*
+*** Costruttore di copia della classe Aula
+*/
+public Aula(Aula a) 
+{
+ setNome(a.getNome());
+ setPiano(a.getPiano());
+ setDb(a.getDb());
+ setTr(a.getTr());
+ 
+ setX1(a.getX1());
+ setY1(a.getY1());
+ 
+ setX2(a.getX2());
+ setY2(a.getY2());
+ 
+ setX3(a.getX3());
+ setY3(a.getY3());
+ 
+ setX4(a.getX4());
+ setY4(a.getY4());
+} 
+/*
 *** metodi getter e setter
 */
 public void setNome(String n)
