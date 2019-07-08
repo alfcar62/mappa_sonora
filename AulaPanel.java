@@ -12,7 +12,9 @@ import java.awt.event.*;
 public class AulaPanel extends JPanel
 {
  private Aula myAula; 
- private BufferedImage img;
+ private BufferedImage imgImg;
+ private BufferedImage imgPlan;
+ private BufferedImage imgDati;
  
  public AulaPanel(Aula a) 
  {
@@ -31,7 +33,9 @@ public class AulaPanel extends JPanel
  int X1,Y1,X2,Y2,X3,Y3,X4,Y4;
 
   int peso=1; // fattore di moltiplicazione per la dimensione delle aule
-  int d = 20;  // distanza dal bordo
+  int d;        // distanza del bordo interno al rettangolo
+  int dx; // distanza dal bordo asse x
+  int dy; // distanza dal bordo asse y
   Color myColor;
   String strPiano;
   
@@ -41,114 +45,156 @@ public class AulaPanel extends JPanel
   System.out.println("AulaPanel: Entro in paintCompoment() ");
  
   /* 
-  *** disegna l'immagine di background con la planimetria del piano scelto
+  *** disegna l'immagine di background con la planimetria dell'aula scelta
   */
-  String strFile = this.myAula.getNome()+ ".jpg";
+  String strFilePlan = "plan/" + this.myAula.getNome()+ ".jpg";
+  System.out.println("leggo il file "+ strFilePlan);
+ 
+  File filePlan = new File(strFilePlan);
+  
+  String strFile = "plan/" + this.myAula.getNome()+ ".jpg";
    
-  System.out.println("leggo il file "+ strFile);
-  File fileBackground = new File(strFile);
-  BufferedImage img;
+  System.out.println("leggo il file della planimetria "+ strFilePlan);
+  /* 
+  *** disegna l'immagine di background con la immagine dell'aula scelta
+  */
+  String strFileImg = "img/" + this.myAula.getNome()+ ".jpg";
+  System.out.println("leggo il file "+ strFileImg);
+ 
+  File fileImg = new File(strFileImg);
+   
+  System.out.println("leggo il file della immagine "+ strFileImg);
+  
+  /* 
+  *** disegna l'immagine di background con la immagine dell'aula scelta
+  */
+  String strFileDati = "dati/" + this.myAula.getNome()+ ".jpg";
+  System.out.println("leggo il file "+ strFileDati);
+ 
+  File fileDati = new File(strFileDati);
+   
+  System.out.println("leggo il file dati "+ strFileDati);
       
   try
-  {      
-   img=ImageIO.read(fileBackground); 
-   int imgW = img.getWidth(this);
-   int imgH = img.getHeight(this);
-   System.out.println("image Width= "+ imgW + " Heigth="+imgH);
+  { 
+   imgPlan=ImageIO.read(filePlan); 
+   imgImg=ImageIO.read(fileImg);
+   imgDati=ImageIO.read(fileDati);
+   
+   int imgWPlan = imgPlan.getWidth(this);
+   int imgHPlan = imgPlan .getHeight(this);
+   
+   int imgWImg = imgImg.getWidth(this);
+   int imgHImg = imgImg.getHeight(this);
+   
+   int imgWDati = imgDati.getWidth(this);
+   int imgHDati = imgDati.getHeight(this);
+   
+   System.out.println("image Plan Width= "+ imgWPlan + " Heigth="+imgHPlan);
+   System.out.println("image Img Width= "+ imgWImg + " Heigth="+imgHImg);
+   System.out.println("image Dati Width= "+ imgWDati + " Heigth="+imgHDati);
+  
    this.setLayout(new BorderLayout());
  
-   g.drawImage(img, 0, 0, this); 
-   System.out.println("draw image");
+   // g.drawImage(img, x, y, width, heigth, this); 
+   g.drawImage(imgPlan, 100, 0, 300, 300, this); 
+   g.drawImage(imgImg,  500, 0, 300, 300, this); 
+   g.drawImage(imgDati, 500, 400, 300, 300, this); 
+   System.out.println("dopo draw image");
   }
   catch(IOException e)
     {
-         img=null;
+         imgPlan = null;
+         imgImg  = null;
          System.out.println("exception image");
     }
 
-// disegna le aule del piano
+// disegna e coloro l'aula indicata con i dati sonori
   
-  g.setColor(Color.black);
-
+  g.setColor(Color.black); 
+  
+  Polygon po = new Polygon();
+  Polygon pc = new Polygon();
    
+  dx = 200;
+  dy = 200;
+  int x1 = 100;
+  int y1 = 400;
   
-      Polygon po = new Polygon();
-      Polygon pc = new Polygon();
-        
-      X1=this.myAula.getX1() * peso;
-      Y1=this.myAula.getY1() * peso;
-      X2=this.myAula.getX2() * peso;
-      Y2=this.myAula.getY2() * peso;
-      X3=this.myAula.getX3() * peso;
-      Y3=this.myAula.getY3() * peso;
-      X4=this.myAula.getX4() * peso;
-      Y4=this.myAula.getY4() * peso;
+  X1 = x1;
+  Y1 = y1;
+  X2 = x1 + dx;
+  Y2 = Y1;
+  X3 = X2;
+  Y3 = Y1+dy;
+  X4 = X1;
+  Y4 = Y3;
       
-      po.addPoint(X1, Y1);
-      po.addPoint(X2, Y2);
-      po.addPoint(X3, Y3);
-      po.addPoint(X4, Y4);
+   po.addPoint(X1, Y1);
+   po.addPoint(X2, Y2);
+   po.addPoint(X3, Y3);
+   po.addPoint(X4, Y4);
       
-      // scrive il nome dell'aula
-      g.setColor(Color.black);
-      g.drawString("Aula:"+this.myAula.getNome(),X1,Y1-5);
-      String sPiano = "piano:" + Integer.valueOf(this.myAula.getPiano());
-      g.drawString(sPiano,X1+150,Y1-5);
+   // scrive il nome dell'aula
+   g.setColor(Color.black);
+   g.drawString("Aula:"+this.myAula.getNome(),X1,Y1-5);
+   String sPiano = "piano:" + Integer.valueOf(this.myAula.getPiano());
+   g.drawString(sPiano,X1+150,Y1-5);
       
 // disegna il rettangolo esterno 
 
-      /* 
-      *** settaggio colore in base al tempo di riverbero
-      */
-      myColor = this.myAula.getColoreTr();
-      g.setColor(myColor);
-      g.fillPolygon(po);
+   /* 
+   *** settaggio colore in base al tempo di riverbero
+   */
+   myColor = this.myAula.getColoreTr();
+   g.setColor(myColor);
+   g.fillPolygon(po);
       
-     // disegna il rettangolo centrale 
+   // disegna il rettangolo centrale 
      
-      d= (X2-X1) * 20 /100;  // bordo interno del 20% 
+   d= (X2-X1) * 20 /100;  // bordo interno del 20% 
       
-      if (X1 == X4)  // aula dritta 
-       {   
+   if (X1 == X4)  // aula dritta 
+     {   
          pc.addPoint(X1+d, Y1+d);
          pc.addPoint(X2-d, Y2+d);
          pc.addPoint(X3-d, Y3-d);
          pc.addPoint(X4+d, Y4-d);
-      }
-      else // aula storta
-      {   
+     }
+    else // aula storta
+     {   
          pc.addPoint(X1+d/4, Y1+d+d/3);
          pc.addPoint(X2-d, Y2+d/2);
          pc.addPoint(X3, Y3-d);
          pc.addPoint(X4+d, Y4-d/2);
-      }
+     }
       
-      /* 
-      *** settaggio colore in base ai decibel
-      */  
-      myColor = this.myAula.getColoreDb();
+   /* 
+   *** settaggio colore in base ai decibel
+   */  
+   myColor = this.myAula.getColoreDb();
       
-      g.setColor(myColor);
-      g.fillPolygon(pc);
+   g.setColor(myColor);
+   g.fillPolygon(pc);
       
-     // disegna i bordi esterni dell'aula
-      g.setColor(Color.black);
-      g.drawPolygon(po);
+  // disegna i bordi esterni dell'aula
+   g.setColor(Color.black);
+   g.drawPolygon(po);
  
-      // disegna i bordi interni dell'aula
+  // disegna i bordi interni dell'aula
       
-      g.setColor(Color.black);
-      g.drawPolygon(pc);
-      // scrive i dati sui decibel sonori al centro
-      g.drawString("Decibel:" + this.myAula.getDb(),X1+40,Y1+40);
+   g.setColor(Color.black);
+   g.drawPolygon(pc);
+   // scrive i dati sui decibel sonori al centro
+   g.drawString("Decibel:" + this.myAula.getDb(),X1+40,Y1+40);
       
-       // scrive i dati sul tempo di riverbero al bordo
-      g.drawString("T.Riverbero:" + this.myAula.getTr(),X1+10,Y1+15); 
+   // scrive i dati sul tempo di riverbero al bordo
+   g.drawString("T.Riverbero:" + this.myAula.getTr(),X1+10,Y1+15); 
      
      
-    System.out.println("Esco da paintCompoment() "); 
-    System.out.println("--------------------------");
-   }
+   System.out.println("Esco da paintCompoment() "); 
+   System.out.println("--------------------------");
+  }
 
    public void mouseExited(MouseEvent e)
     {    
@@ -168,8 +214,7 @@ public class AulaPanel extends JPanel
     {    
     }
  
-   
-  
+    
   public void mouseDragged(MouseEvent e)
     {    
         System.out.println("dragged"); 
@@ -179,30 +224,5 @@ public class AulaPanel extends JPanel
    {  
       System.out.println("clicked");
    }
-   
-   public void disegna_aula (Aula a)
-   {
-        System.out.println("entro in disegna_aula()");
-        String strFile = a.getNome() + ".jpg";
-        File fileBackground = new File(strFile);
-        BufferedImage img;  
-   
-        try
-         {      
-          img=ImageIO.read(fileBackground); 
-          int imgW = img.getWidth(this);
-          int imgH = img.getHeight(this);
-          System.out.println("image Width= "+ imgW + " Heigth="+imgH);
-          this.setLayout(new BorderLayout());
-          
-  //        g.drawImage(img, 0, 0, this); 
-          System.out.println("draw image");
-         }
-        catch(IOException e)
-         {
-          img=null;
-          System.out.println("exception image");
-         }
-
-   }
+ 
 }

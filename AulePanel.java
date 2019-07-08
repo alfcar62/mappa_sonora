@@ -120,23 +120,23 @@ public void setPiano(int p)
   /* 
   *** disegna l'immagine di background con la planimetria del piano scelto
   */
-  String strFile = "";
+  String strFile = "plan/";
    switch(this.piano)
     { 
         case 0:
-        strFile = "plan_p0.jpg";
+        strFile = strFile + "plan_p0.jpg";
          break;
        case 1: 
-         strFile = "plan_p1.jpg";
+         strFile = strFile + "plan_p1.jpg";
          break;
        case 2: 
-        strFile = "plan_p2.jpg";
+        strFile = strFile + "plan_p2.jpg";
        break;
         case 3:
-            strFile = "plan_p3.jpg";
+            strFile = strFile + "plan_p3.jpg";
        break;
         case 4:
-            strFile = "plan_p4.jpg";
+            strFile.concat("plan_p4.jpg");
        break;
     }
    File fileBackground = new File(strFile);
@@ -307,7 +307,7 @@ public void setPiano(int p)
          AulaFrame af = new AulaFrame(a); 
          
          af.setTitle("Mappa Sonora aula "+a.getNome());
-         af.setSize(700,700);
+         af.setSize(1000,1000);
          af.setVisible(true);
    }
  }
