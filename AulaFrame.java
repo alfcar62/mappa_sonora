@@ -4,6 +4,7 @@ import java.awt.event.*;
 import javax.imageio.*;
 import java.io.*;
 
+
 /*
 *** AulaFrame
 *** classe che rappresenta il Frame con il dettaglio di una singola aula
@@ -28,7 +29,6 @@ public class AulaFrame extends JFrame
     
      aulap = new AulaPanel(a);
      aulap.setBackground(Color.white);
-   //  this.setBackground(Color.WHITE);
      pan.setBackground(Color.WHITE);
      
      pan.setLayout(new BorderLayout());
@@ -66,15 +66,15 @@ public class AulaFrame extends JFrame
        }
     if (pulsante.equals("Pianta"))
       {      
-        System.out.println("Scelta pianta aula");
+         System.out.println("Scelta pianta aula");
          pan.repaint();
        }
     
     if (pulsante.equals("Audio"))
       {      
-        System.out.println("Scelto Audio aula");
-        
-        pan.repaint();
+        System.out.println("Scelto Audio aula");  
+        aulap.ascoltaAula();
+   //     pan.repaint();
        }  
  
     System.out.println("esco da ActionPerformed()");

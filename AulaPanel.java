@@ -5,6 +5,7 @@ import java.awt.image.*;
 import java.io.*;
 import java.awt.geom.AffineTransform;
 import java.awt.event.*;
+import javax.sound.sampled.*;
 
 /*
 *** AulePanel: Pannello che contiene la mappa delle aule di un determinato piano
@@ -30,6 +31,7 @@ public class AulaPanel extends JPanel
 */
   public void paintComponent(Graphics g)
 {
+    
  int X1,Y1,X2,Y2,X3,Y3,X4,Y4;
 
   int peso=1; // fattore di moltiplicazione per la dimensione delle aule
@@ -196,6 +198,8 @@ public class AulaPanel extends JPanel
    System.out.println("--------------------------");
   }
 
+    
+  
    public void mouseExited(MouseEvent e)
     {    
     }     
@@ -224,5 +228,28 @@ public class AulaPanel extends JPanel
    {  
       System.out.println("clicked");
    }
+ 
+   /*
+   *** ascoltaAula(): Riproduce il suono dell'aula indicata
+   */
+  
+  public void ascoltaAula()
+   {   
+        try
+         {
+          String strFileAudio = "audio/" + this.myAula.getNome()+ ".wav";
+          System.out.println("leggo il file "+ strFileAudio);
+          File audioFile = new File(strFileAudio);
+          AudioInputStream audioIn = AudioSystem.getAudioInputStream(audioFile);
+          Clip suono = null;
+          suono = AudioSystem.getClip();
+          suono.open(audioIn);
+          suono.start();
+         }
+        catch (Exception ex)
+         {
+           System.out.println("il suono non può essere caricato");
+         }
+    }
  
 }
