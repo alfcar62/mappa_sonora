@@ -1,9 +1,11 @@
+
+
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.imageio.*;
 import java.io.*;
-
 
 /*
 *** AulaFrame
@@ -19,7 +21,7 @@ public class AulaFrame extends JFrame
    private JPanel panBtn = new JPanel();
    
    private JButton btnAudio = new JButton("Audio");
- 
+   private JButton btnSalva = new JButton("Salva");
    private AulaPanel aulap; //pannello con la pianta dell'aula
      
    public AulaFrame(Aula a)
@@ -38,11 +40,13 @@ public class AulaFrame extends JFrame
      pan.add(panBtn, "North");
      
      panBtn.add(btnAudio);
+     panBtn.add(btnSalva);
  
      this.getContentPane().add(pan,BorderLayout.CENTER);
      this.pack();
      
      btnAudio.addActionListener(this);
+     btnSalva.addActionListener(this);
      
      System.out.println("esco da AulaFrame()");
      System.out.println("--------------------------------");
@@ -74,9 +78,13 @@ public class AulaFrame extends JFrame
       {      
         System.out.println("Scelto Audio aula");  
         aulap.ascoltaAula();
-   //     pan.repaint();
        }  
  
+     if (pulsante.equals("Salva"))
+      {      
+        System.out.println("Scelto Salva aula");  
+        aulap.salvaAula();
+       }  
     System.out.println("esco da ActionPerformed()");
     System.out.println("--------------------------------");
  }

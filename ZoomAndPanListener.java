@@ -1,3 +1,7 @@
+
+
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -84,7 +88,7 @@ public class ZoomAndPanListener implements MouseListener, MouseMotionListener, M
     }
 
     private void moveCamera(MouseEvent e) {
-//        System.out.println("============= Move camera ============");
+       System.out.println("============= Move camera ============");
         try {
             dragEndScreen = e.getPoint();
             Point2D.Float dragStart = transformPoint(dragStartScreen);
@@ -101,6 +105,7 @@ public class ZoomAndPanListener implements MouseListener, MouseMotionListener, M
     }
 
     private void zoomCamera(MouseWheelEvent e) {
+          System.out.println("============= Zoom camera ============");
         try {
             int wheelRotation = e.getWheelRotation();
             Point p = e.getPoint();
@@ -129,7 +134,7 @@ public class ZoomAndPanListener implements MouseListener, MouseMotionListener, M
     }
 
     private Point2D.Float transformPoint(Point p1) throws NoninvertibleTransformException {
-//        System.out.println("Model -> Screen Transformation:");
+        System.out.println("Model -> Screen Transformation:");
 //        showMatrix(coordTransform);
         AffineTransform inverse = coordTransform.createInverse();
 //        System.out.println("Screen -> Model Transformation:");

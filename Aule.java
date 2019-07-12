@@ -1,3 +1,7 @@
+
+
+
+
 import java.util.Vector;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -119,7 +123,7 @@ public void leggiDaFile(int piano) {
         System.out.println("-------------------------");
         System.out.println("entro in leggiDaFile() piano="+piano);
 //        String csvFile = "D:\\PC_NEW\\Scuola\\generale\\LinguaggiProgrammazione\\java\\Java_CSV\\vector2\\DatiAule.csv";
-        String csvFile = "DatiAule.csv";
+        String csvFile = "dati/DatiAule.csv";
         String line = "";
         String cvsSplitBy = ",";
 

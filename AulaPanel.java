@@ -1,3 +1,7 @@
+
+
+
+
 import java.awt.*;
 import javax.swing.*;
 import javax.imageio.*;
@@ -105,13 +109,13 @@ public class AulaPanel extends JPanel
    System.out.println("dopo draw image");
   }
   catch(IOException e)
-    {
+   {
          imgPlan = null;
          imgImg  = null;
          System.out.println("exception image");
-    }
+   }
 
-// disegna e coloro l'aula indicata con i dati sonori
+// disegna e colora l'aula indicata con i dati sonori
   
   g.setColor(Color.black); 
   
@@ -208,8 +212,7 @@ public class AulaPanel extends JPanel
     {    
     }
   
-  
-  
+   
   public void mouseReleased(MouseEvent e)
     {    
     }
@@ -252,4 +255,46 @@ public class AulaPanel extends JPanel
          }
     }
  
+  
+  /*
+   *** salvaAula(): Salva la pianta dell'aula
+   */
+  
+  public void salvaAula()
+   {          
+          JFileChooser fileChooser = new JFileChooser();
+          String strFilePlan = "out/" + this.myAula.getNome()+ "_plan"+ ".png";
+          System.out.println("scrivo su file "+ strFilePlan);
+          File fp = new File(strFilePlan);
+          String strFileDati = "out/" + this.myAula.getNome()+ "_dati"+ ".png";
+          File fd = new File(strFileDati);
+          fileChooser.setSelectedFile(fd);
+           try
+            { 
+             ImageIO.write(this.getPlan(), "png", fp);
+             ImageIO.write(this.getDati(), "png", fd);
+            }
+            catch (Exception ex)
+            {
+             System.out.println("errore in Salvataggio  aula su file");
+            }
+        
+           JOptionPane.showMessageDialog(this, "file  salvati correttamente sotto cartella /out","Info",  JOptionPane.INFORMATION_MESSAGE);
+    }// end salvaPiantaAula
+  
+  /*
+  *** getDisegno(): ritorna l'immagine con la planimetria dell'aula
+  */
+  public BufferedImage getPlan()
+         {  
+             return imgPlan;
+         }
+  
+  /*
+  *** getDati(): ritorna l'immagine con i dati dell'aula
+  */
+  public BufferedImage getDati()
+         {  
+             return imgDati;
+         }
 }
