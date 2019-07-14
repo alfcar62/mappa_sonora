@@ -1,7 +1,3 @@
-
-
-
-
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -20,7 +16,7 @@ public class MainFrame extends JFrame
 {
    private int piano;
    private JPanel pan;
-   private AulePanel aulep;
+   private PianoPanel aulep;
    private JComboBox cbPiani;
    private JButton btnCambiaPiano;
    
@@ -30,10 +26,9 @@ public class MainFrame extends JFrame
      System.out.println("--------------------------------");
      System.out.println("Entro in MainFrame piano="+piano);
      pan = new JPanel();
-     aulep = new AulePanel(piano);
+     aulep = new PianoPanel(piano);
      cbPiani = new JComboBox();
      btnCambiaPiano = new JButton("Scegli");
- //    this.pack();
      this.pack();
      this.setPiano(piano);
      System.out.println("entro in MainFrame()");
