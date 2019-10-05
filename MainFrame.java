@@ -7,7 +7,7 @@ import java.io.*;
 /*
 *** MainFrame
 *** classe che rappresenta il Frame principale
-*** Conterrà 
+*** Contiene:
 *** un pannello superiore per la scelta del piano
 *** un pannello centrale con la mappa delle aule
 */

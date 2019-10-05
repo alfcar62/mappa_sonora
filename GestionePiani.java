@@ -1,7 +1,9 @@
 
 
 
-
+/*
+*** GestionePiani: classe che implementa l'interfaccia WindowListener
+*/
 
 import java.awt.event.*;
 
