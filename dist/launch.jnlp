@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="http://127.0.0.1/MappaAvo" href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>MappaSonoraAvo</title>
+        <vendor>Avogadro</vendor>
+        <homepage href=""/>
+        <description>Visualizzazione della mappa sonora dell'IIS A. Avogadro di Torino.
+Progetto a cura della classe 4C INFO dell'a.s. 2018/19 e del docente A. Carlone</description>
+        <description kind="short">MappaSonoraAvo</description>
+    <offline-allowed/>
+</information>
+    <update check="background"/>
+    <security>
+<all-permissions/>
+</security>
+    <resources>
+        <j2se version="1.8+"/>
+        <jar href="MappaSonoraAvo.jar" main="true"/>
+    </resources>
+    <application-desc main-class="MainMappa">
+    </application-desc>
+</jnlp>
