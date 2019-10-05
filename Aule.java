@@ -1,12 +1,13 @@
-
-
-
-
 import java.util.Vector;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.IOException;
-
+/*
+*** Aule: classe che rappresenta le  aule di un determinato piano
+***       viene implementata con un vettore di aule 
+*/
 public class Aule
 {
     private Vector v_aule;
@@ -126,8 +127,12 @@ public void leggiDaFile(int piano) {
         String csvFile = "dati/DatiAule.csv";
         String line = "";
         String cvsSplitBy = ",";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();   
+        InputStream inputStream = classloader.getResourceAsStream(csvFile);
+        
+        InputStreamReader streamReader = new InputStreamReader(inputStream);
+        try (BufferedReader br = new BufferedReader(streamReader)) {
         line = br.readLine();   // skip della prima riga con le intestazioni
       
     //    Aule myAule = new Aule();

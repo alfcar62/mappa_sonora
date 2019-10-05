@@ -56,18 +56,30 @@ public class AulaPanel extends JPanel
   String strFilePlan = "plan/" + this.myAula.getNome()+ ".jpg";
   System.out.println("leggo il file "+ strFilePlan);
  
-  File filePlan = new File(strFilePlan);
+   //ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+     ClassLoader classloader = Thread.currentThread().getContextClassLoader();  
+ 
+    File filePlan = new File (classloader.getResource(strFilePlan).getFile()); 
   
-  String strFile = "plan/" + this.myAula.getNome()+ ".jpg";
-   
+ 
+ //  File filePlan = new File (getClass().getClassLoader().getResource (strFilePlan).getFile()); 
+ 
+ // File filePlan = new File(strFilePlan);
+  
   System.out.println("leggo il file della planimetria "+ strFilePlan);
+  
+  
   /* 
   *** disegna l'immagine di background con la immagine dell'aula scelta
   */
   String strFileImg = "img/" + this.myAula.getNome()+ ".jpg";
   System.out.println("leggo il file "+ strFileImg);
- 
-  File fileImg = new File(strFileImg);
+  
+
+ // File fileImg = new File (getClass().getClassLoader().getResource (strFileImg).getFile());
+  File fileImg = new File (classloader.getResource(strFileImg).getFile()); 
+  
+ // File fileImg = new File(strFileImg);
    
   System.out.println("leggo il file della immagine "+ strFileImg);
   
@@ -76,8 +88,12 @@ public class AulaPanel extends JPanel
   */
   String strFileDati = "dati/" + this.myAula.getNome()+ ".jpg";
   System.out.println("leggo il file "+ strFileDati);
+  
+  File fileDati = new File (classloader.getResource(strFileDati).getFile()); 
+  
+ // File fileDati = new File (getClass().getClassLoader().getResource (strFileDati).getFile());
  
-  File fileDati = new File(strFileDati);
+ // File fileDati = new File(strFileDati);
    
   System.out.println("leggo il file dati "+ strFileDati);
       
@@ -242,7 +258,9 @@ public class AulaPanel extends JPanel
          {
           String strFileAudio = "audio/" + this.myAula.getNome()+ ".wav";
           System.out.println("leggo il file "+ strFileAudio);
-          File audioFile = new File(strFileAudio);
+          
+           File audioFile = new File (getClass().getClassLoader().getResource (strFileAudio).getFile()); 
+ //         File audioFile = new File(strFileAudio);
           AudioInputStream audioIn = AudioSystem.getAudioInputStream(audioFile);
           Clip suono = null;
           suono = AudioSystem.getClip();

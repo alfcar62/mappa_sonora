@@ -87,7 +87,7 @@ public void setPiano(int p)
   
   super.paintComponent(g);
   
-   System.out.println("--------------------------");
+  System.out.println("--------------------------");
   System.out.println("PianoPanel: Entro in paintCompoment() ");
   // inizio gestione panning e zooming
   Graphics2D g1 = (Graphics2D) g;
@@ -144,10 +144,19 @@ public void setPiano(int p)
             strFile.concat("plan_p4.jpg");
        break;
     }
-   File fileBackground = new File(strFile);
+   
+   // getClass().getClassLoader().getResource(strFile);
+   // File fileBackground = new File (getClass().getClassLoader().getResource(strFile).getFile());
+    
+    ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+    File fileBackground = new File (classloader.getResource(strFile).getFile());
+    
+  
+ //    File fileBackground = new File (getClass().getClassLoader().getResource (strFile).getFile());
+ //   File fileBackground = new File(strFile);
    BufferedImage img;
    
-   
+  
   try
   {      
    img=ImageIO.read(fileBackground); 
