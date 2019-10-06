@@ -10,9 +10,12 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import java.net.URL;
 
-/*
+/**
 *** PianoPanel: Pannello che contiene la mappa delle aule di un determinato piano
+*** @author A.Carlone
+*** @version 1.0
 */
 public class PianoPanel extends JPanel
         implements  MouseListener, MouseMotionListener
@@ -71,7 +74,7 @@ public void setPiano(int p)
       } 
   
 
-/*
+/**
 *** paintComponent(): Metodo invocato automaticamente 
 *** alla creazione del pannello AulePanel, che visualizza la mappa sul Pannello
 */
@@ -114,9 +117,6 @@ public void setPiano(int p)
       g1.setFont(font.deriveFont(affineTransform));
 // fine  gestione panning e zooming
   
-
- 
-  
   System.out.println("size="+ myAule.getSize());
  
   strPiano =  "Piano: " + this.piano;
@@ -141,25 +141,36 @@ public void setPiano(int p)
             strFile = strFile + "plan_p3.jpg";
        break;
         case 4:
-            strFile.concat("plan_p4.jpg");
+            strFile = strFile + "plan_p4.jpg";         
        break;
+        default:
+            System.out.println("Piano errato"+ this.piano);
+            break;
     }
    
-   // getClass().getClassLoader().getResource(strFile);
-   // File fileBackground = new File (getClass().getClassLoader().getResource(strFile).getFile());
+   //ok  File fb = new File (getClass().getClassLoader().getResource(strFile).getFile());
+       
+   // File fileBackground = new File (classloader.getResource(strFile).getFile());
+   ClassLoader classloader = Thread.currentThread().getContextClassLoader();   
     
-    ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-    File fileBackground = new File (classloader.getResource(strFile).getFile());
+  InputStream is = classloader.getResourceAsStream(strFile);
     
-  
- //    File fileBackground = new File (getClass().getClassLoader().getResource (strFile).getFile());
- //   File fileBackground = new File(strFile);
-   BufferedImage img;
-   
-  
-  try
-  {      
-   img=ImageIO.read(fileBackground); 
+ // ok File fb = new File (getClass().getClassLoader().getResource (strFile).getFile());
+   //     ClassLoader classloader = Thread.currentThread().getContextClassLoader();   
+ // URL url = new URL(getCodeBase(), strFile);
+ try
+    {  
+ //    String strURL = "http://127.0.0.1/MappaAvo/plan/plan_p1.jpg";
+ //    URL url = new URL(classloader.getResource(strURL).getFile());
+//   File fileBackground = new File(strFile);
+ 
+    BufferedImage img;
+   // ok img=ImageIO.read(fileBackground);
+    img=ImageIO.read(is);
+    
+//   BufferedImage img = ImageIO.read(
+ //                       new BufferedInputStream(ImageLoader.class.getClassLoader().getResourceAsStream(strFile)));
+
    int imgW = img.getWidth(this);
    int imgH = img.getHeight(this);
    System.out.println("image Width= "+ imgW + " Heigth="+imgH);

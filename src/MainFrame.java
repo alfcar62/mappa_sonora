@@ -4,12 +4,14 @@ import java.awt.event.*;
 import javax.imageio.*;
 import java.io.*;
 
-/*
+/**
 *** MainFrame
 *** classe che rappresenta il Frame principale
 *** Contiene:
 *** un pannello superiore per la scelta del piano
 *** un pannello centrale con la mappa delle aule
+*** @author A.Carlone
+*** @version 1.0
 */
 public class MainFrame extends JFrame 
         implements ActionListener
@@ -47,9 +49,7 @@ public class MainFrame extends JFrame
      System.out.println("--------------------------------");
     }      
 
- 
-
-        
+       
 public int getPiano()
   {  
    return (piano);   
@@ -61,6 +61,9 @@ public void setPiano(int p)
    System.out.println("setto piano="+ Integer.valueOf(p));
   }
 
+/**
+*** combo box con la scelta del piano
+*/
 private void initCombo()
  {
    System.out.println("Entro in initCombo() ");
@@ -74,7 +77,7 @@ private void initCombo()
    System.out.println("Esco da initCombo() ");
  }
  
-/*
+/**
 *** gestione della scelta del piano da visualizzare
 */
    public void actionPerformed(ActionEvent e)

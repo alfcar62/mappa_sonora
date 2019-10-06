@@ -1,8 +1,9 @@
 import java.awt.Color;
 
-
-/*
+/**
 *** Aula: classe che rappresenta un'aula con i dati sonori e le 4 coordinate 
+***@author: A. Carlone
+***@version: 1.0
 */
 public class Aula  {
 	 private String nome;	// nome aula
@@ -22,8 +23,20 @@ public class Aula  {
          private int x4;
          private int y4;
         
-/*
+/**
 *** Costruttore della classe Aula
+*** @param nome nome dell'aula
+*** @param piano piano dell'aula
+*** @param db  valore in decibel del rumore dell'aula
+*** @param tr tempo di riverbero dell'aula
+*** @param x1 coordinata x1
+*** @param y1 coordinata y1
+*** @param x2 coordinata x2
+*** @param y2 coordinata y2
+*** @param x3 coordinata x3
+*** @param y3 coordinata y3
+*** @param x4 coordinata x4
+*** @param y4 coordinata y4
 */
 public Aula(String nome, int piano,float db, float tr,int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4) 
 {
@@ -45,8 +58,8 @@ public Aula(String nome, int piano,float db, float tr,int x1,int y1,int x2,int y
  setY4(y4);
 } 
 
-/*
-*** Costruttore di copia della classe Aula
+/**
+*** Costruttore di copia 
 */
 public Aula(Aula a) 
 {
@@ -180,8 +193,8 @@ public void setY4(int y4)
 }
 
 
-/*
-*** SiPresenta()
+/**
+*** log dei dati di un'aula
 */
 public void SiPresenta()
  {
@@ -192,8 +205,8 @@ public void SiPresenta()
  
  }
 
-/*
-*** toString()
+/**
+*** trasformazione in stringa dei dati di un'aula
 */
  public String toString()
  {
@@ -207,11 +220,13 @@ public void SiPresenta()
   return myStr;
  }
  
- /*
-*** ritorna il colore associato al valore in decibel
+ /**
+*** ritorna il colore associato al valore del suono in decibel
+*** in base alle norme vigenti
 *** db < 20-> verde
 *** db > 25-> rosso
 *** altrimenti giallo
+*** @return Color
 */
 Color getColoreDb()    
     { 
@@ -225,11 +240,13 @@ Color getColoreDb()
         return myColor;
     }
  
-/*
+/**
 *** ritorna il colore associato al valore del tempo di riverbero
+*** in base alle norme vigenti.
 *** tr < 4-> verde
 *** tr > 5-> rosso
 *** altrimenti giallo
+*** @return Color
 */
 Color getColoreTr()     
     { 

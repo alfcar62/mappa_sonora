@@ -4,17 +4,22 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.InputStream;
 import java.io.IOException;
-/*
-*** Aule: classe che rappresenta le  aule di un determinato piano
-***       viene implementata con un vettore di aule 
+
+
+/**
+*** Aule: classe che rappresenta le  aule di un determinato piano.
+*** Viene implementata con un vettore di aule 
+***@author: A. Carlone
+***@version: 1.0
 */
 public class Aule
 {
     private Vector v_aule;
     private int piano;
   
-    /*
+    /**
     *** Costruttore: costruisce un vettore di aule del piano indicato
+    *** @param piano piano da leggere 
     */
     public Aule(int piano)
      {
@@ -28,13 +33,18 @@ public class Aule
       System.out.println("----------------------");
      }
 
+    /**
+    *** aggiunge un'aula nel vettore di aule 
+    *** del piano indicato
+    *** @param a aula
+    */
     public void aggiungi(Aula a)
      {
          System.out.println("aggiungi() aula=" + a.getNome());
          v_aule.addElement(a);
      }
     
-    /*
+    /**
     *** Cancellazione di tutto il vettore di aule
     *** 
     */
@@ -53,9 +63,10 @@ public class Aule
         System.out.println("----------------------");
      }
     
-   /*
+   /**
     *** Cancellazione di un elemento del vettore di aule v_aule
     *** verrà cancellato l'elemento in posizione i
+    *** @param i posizione nel vettore dell'elemento da cancellare
     */
     
     public void cancella(int i)
@@ -95,7 +106,7 @@ public class Aule
          return(a);       
        }
     
-    /*
+    /**
     *** Legge le aule presenti nel vettore v_aule
     */
    public void log()
@@ -117,8 +128,12 @@ public class Aule
     }
 
 
-/*
-*** leggiDaFile: Legge l'elenco delle aule con i dati presenti su file csv e li carica su un vettore di oggetti di classe Aula
+/**  
+*** Legge da file DatiAule.csv  
+*** (presente sotto la cartella dati) i deti 
+*** delle misure delle aule del piano e 
+*** li carica su un vettore di oggetti di classe Aula
+*** @param piano piano dell'aula da leggere
 */
 public void leggiDaFile(int piano) {
         System.out.println("-------------------------");

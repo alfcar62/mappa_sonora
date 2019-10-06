@@ -1,7 +1,3 @@
-
-
-
-
 import java.awt.*;
 import javax.swing.*;
 import javax.imageio.*;
@@ -11,8 +7,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.event.*;
 import javax.sound.sampled.*;
 
-/*
+/**
 *** AulePanel: Pannello che contiene la mappa delle aule di un determinato piano
+*** @author A.Carlone
+*** @version 1.0
 */
 public class AulaPanel extends JPanel
 {
@@ -29,9 +27,10 @@ public class AulaPanel extends JPanel
  }
  
 
-/*
-*** paintComponent(): Metodo invocato automaticamente 
-*** alla creazione del pannello AulePanel, che visualizza la mappa sul Pannello
+/**
+*** Metodo invocato automaticamente 
+*** alla creazione del pannello AulePanel.
+*** Visualizza la mappa sul Pannello
 */
   public void paintComponent(Graphics g)
 {
@@ -57,10 +56,12 @@ public class AulaPanel extends JPanel
   System.out.println("leggo il file "+ strFilePlan);
  
    //ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-     ClassLoader classloader = Thread.currentThread().getContextClassLoader();  
+ //    ClassLoader classloader = Thread.currentThread().getContextClassLoader();  
  
-    File filePlan = new File (classloader.getResource(strFilePlan).getFile()); 
-  
+ //   File filePlan = new File (classloader.getResource(strFilePlan).getFile()); 
+   ClassLoader classloader = Thread.currentThread().getContextClassLoader();   
+    
+   InputStream filePlan = classloader.getResourceAsStream(strFilePlan);
  
  //  File filePlan = new File (getClass().getClassLoader().getResource (strFilePlan).getFile()); 
  
@@ -77,7 +78,8 @@ public class AulaPanel extends JPanel
   
 
  // File fileImg = new File (getClass().getClassLoader().getResource (strFileImg).getFile());
-  File fileImg = new File (classloader.getResource(strFileImg).getFile()); 
+ // File fileImg = new File (classloader.getResource(strFileImg).getFile()); 
+ InputStream fileImg = classloader.getResourceAsStream(strFileImg);
   
  // File fileImg = new File(strFileImg);
    
@@ -89,12 +91,14 @@ public class AulaPanel extends JPanel
   String strFileDati = "dati/" + this.myAula.getNome()+ ".jpg";
   System.out.println("leggo il file "+ strFileDati);
   
-  File fileDati = new File (classloader.getResource(strFileDati).getFile()); 
+ // File fileDati = new File (classloader.getResource(strFileDati).getFile()); 
   
  // File fileDati = new File (getClass().getClassLoader().getResource (strFileDati).getFile());
  
  // File fileDati = new File(strFileDati);
-   
+  
+ InputStream fileDati = classloader.getResourceAsStream(strFileDati);
+  
   System.out.println("leggo il file dati "+ strFileDati);
       
   try
@@ -248,20 +252,25 @@ public class AulaPanel extends JPanel
       System.out.println("clicked");
    }
  
-   /*
-   *** ascoltaAula(): Riproduce il suono dell'aula indicata
-   */
-  
+   /**
+   *** Riproduce il suono dell'aula
+   *** I dati sonori sono presenti su un file il cui nome corrisponde
+   *** al nome dell'aula con estensione .wav presente
+   *** nella cartella audio 
+   */ 
   public void ascoltaAula()
    {   
         try
          {
           String strFileAudio = "audio/" + this.myAula.getNome()+ ".wav";
           System.out.println("leggo il file "+ strFileAudio);
-          
-           File audioFile = new File (getClass().getClassLoader().getResource (strFileAudio).getFile()); 
+         
+          ClassLoader classloader = Thread.currentThread().getContextClassLoader();   
+    
+          InputStream is = classloader.getResourceAsStream(strFileAudio);
+   //        File audioFile = new File (getClass().getClassLoader().getResource (strFileAudio).getFile()); 
  //         File audioFile = new File(strFileAudio);
-          AudioInputStream audioIn = AudioSystem.getAudioInputStream(audioFile);
+          AudioInputStream audioIn = AudioSystem.getAudioInputStream(is);
           Clip suono = null;
           suono = AudioSystem.getClip();
           suono.open(audioIn);
@@ -274,8 +283,11 @@ public class AulaPanel extends JPanel
     }
  
   
-  /*
-   *** salvaAula(): Salva la pianta dell'aula
+  /**
+   *** Salva due file con estensione .png.
+   *** Uno con la pianta dell'aula e il secondo
+   *** con  i suoi dati, su
+   *** sulla cartella out
    */
   
   public void salvaAula()
@@ -300,16 +312,18 @@ public class AulaPanel extends JPanel
            JOptionPane.showMessageDialog(this, "file  salvati correttamente sotto cartella /out","Info",  JOptionPane.INFORMATION_MESSAGE);
     }// end salvaPiantaAula
   
-  /*
-  *** getDisegno(): ritorna l'immagine con la planimetria dell'aula
+  /**
+  *** ritorna l'immagine con la planimetria dell'aula
+  *** @return imgPlan  Immagine con la  planimetria dell'aula
   */
   public BufferedImage getPlan()
          {  
              return imgPlan;
          }
   
-  /*
-  *** getDati(): ritorna l'immagine con i dati dell'aula
+  /**
+  *** ritorna l'immagine con i dati dell'aula
+  *** @return imgDati  Immagine con i dati dell'aula
   */
   public BufferedImage getDati()
          {  

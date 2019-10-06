@@ -1,18 +1,17 @@
-
-
-
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.imageio.*;
 import java.io.*;
 
-/*
+/**
 *** AulaFrame
 *** classe che rappresenta il Frame con il dettaglio di una singola aula
 *** Contiene: 
 *** un pannello centrale con la planimetria e l'immagine di una aula
 *** un pannello inferiore con i pulsanti
+*** @author A.Carlone
+*** @version 1.0
 */
 public class AulaFrame extends JFrame 
         implements ActionListener
@@ -54,7 +53,7 @@ public class AulaFrame extends JFrame
 
         
 
-/*
+/**
 *** gestione degli eventi
 */
    public void actionPerformed(ActionEvent e)

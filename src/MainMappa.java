@@ -6,9 +6,9 @@
  */
 
 /**
- *
- * Main()
- */
+ ***
+ *** MainMappa()  Main del programma
+ ***/
 class MainMappa {
     public static void main(String[] args) 
        {
