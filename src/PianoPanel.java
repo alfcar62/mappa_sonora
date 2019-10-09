@@ -67,7 +67,8 @@ public void setPiano(int p)
             System.out.println("cancellazione aula [ " + i+"]="+myAule.getAula(i));
             myAule.cancella(i);
          }
-        myAule.leggiDaFile(piano);
+ //       myAule.leggiDaFile(piano);
+        myAule.leggi(piano);
         System.out.println("Esco da PianoPanel.ripristina()");
         System.out.println("-------------------------");
       
@@ -151,7 +152,7 @@ public void setPiano(int p)
    //ok  File fb = new File (getClass().getClassLoader().getResource(strFile).getFile());
        
    // File fileBackground = new File (classloader.getResource(strFile).getFile());
-   ClassLoader classloader = Thread.currentThread().getContextClassLoader();   
+  ClassLoader classloader = Thread.currentThread().getContextClassLoader();   
     
   InputStream is = classloader.getResourceAsStream(strFile);
     
@@ -160,9 +161,7 @@ public void setPiano(int p)
  // URL url = new URL(getCodeBase(), strFile);
  try
     {  
- //    String strURL = "http://127.0.0.1/MappaAvo/plan/plan_p1.jpg";
- //    URL url = new URL(classloader.getResource(strURL).getFile());
-//   File fileBackground = new File(strFile);
+//   ok File fileBackground = new File(strFile);
  
     BufferedImage img;
    // ok img=ImageIO.read(fileBackground);

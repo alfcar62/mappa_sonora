@@ -1,9 +1,14 @@
 import java.util.Vector;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.InputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.*;
+
 
 
 /**
@@ -27,7 +32,7 @@ public class Aule
       System.out.println("Entro in Aule()");
       v_aule = new Vector (1,1);
       System.out.println("size = " +v_aule.size());
-      this.leggiDaFile(piano);
+      this.leggi(piano);
       System.out.println("size = " +v_aule.size());
       System.out.println("Esco da  Aule()");
       System.out.println("----------------------");
@@ -126,11 +131,17 @@ public class Aule
          System.out.println("Esco da log() ");
          System.out.println("-------------------------");
     }
-
+   
+   
+public void leggi(int piano) {
+ 
+ //   leggiDaFile(piano);
+    leggiDaDB(piano);
+}
 
 /**  
 *** Legge da file DatiAule.csv  
-*** (presente sotto la cartella dati) i deti 
+*** (presente sotto la cartella dati) i dati 
 *** delle misure delle aule del piano e 
 *** li carica su un vettore di oggetti di classe Aula
 *** @param piano piano dell'aula da leggere
@@ -206,14 +217,112 @@ public void leggiDaFile(int piano) {
                }
             }
            this.log();
-           System.out.println("lette correttamente " + i + " aule ok");
-            
-           
+           System.out.println("lette correttamente " + i + " aule ok");       
         } catch (IOException e)
         {
             e.printStackTrace();
         }
     System.out.println("esco da leggiDaFile() piano="+piano);
+    System.out.println("-------------------------");
+  }
+
+/**  
+*** Legge da Database
+*** i dati delle misure delle aule del piano e 
+*** li carica su un vettore di oggetti di classe Aula
+*** @param piano piano dell'aula da leggere
+*/
+public void leggiDaDB(int myPiano) {
+        System.out.println("-------------------------");
+        System.out.println("entro in leggiDaDB() piano="+myPiano);
+        ResultSet rs ; 
+        Connection con = null;
+        int i = 0;
+        
+        String nomeaula="";
+        int piano;
+        int dB;
+        int riverb; 
+        int x1;
+        int y1; 
+        int x2;
+        int y2; 
+        int x3;
+        int y3; 
+        int x4;
+        int y4; 
+  
+        /* mysql.itisavogadro.org/acarlone
+        String dbName = "acarlone";
+        String server = "mysql.itisavogadro.org";
+        String driver = "jdbc:mysql://";
+        String connStr = driver +  server + "/" + dbName;
+        String userDB = "acarlone";
+        String passDB = "Cambiami_2018";
+      */
+        //localhost
+        String dbName = "mappa_avo";
+        String server = "localhost";
+        String driver = "jdbc:mysql://";
+        String connStr = driver +  server + "/" + dbName;
+        String userDB = "root";
+        String passDB = "";
+      
+        try
+        {
+         Class.forName("com.mysql.jdbc.Driver");
+         System.out.println("connessione a connStr=" + connStr);
+         System.out.println("user=" + userDB);
+         System.out.println("pass=" + passDB);
+     
+         con = DriverManager.getConnection(connStr, userDB, passDB); 
+         System.out.println("connessione OK");
+         Statement st = con.createStatement();
+
+         rs = st.executeQuery("SELECT * FROM datiaule");
+         do
+          { 
+          rs.next();
+          nomeaula = rs.getString("nomeaula");
+          piano= rs.getInt("piano");
+          dB= rs.getInt("dB");
+          riverb= rs.getInt("riverb");
+          x1= rs.getInt("x1");
+          y1= rs.getInt("y1");
+          x2= rs.getInt("x2");
+          y2= rs.getInt("y2");
+          x3= rs.getInt("x3");
+          y3= rs.getInt("y3");
+          x4= rs.getInt("x4");
+          y4= rs.getInt("y4");
+         
+          System.out.println("entro in leggiDaDB() nomeaula="+nomeaula);
+          if  (myPiano == piano) 
+           {
+            Aula a1 = new Aula(nomeaula,
+                               piano, 
+                               dB, 
+                               riverb, 
+                               x1, y1, 
+                               x2, y2, 
+                               x3, y3, 
+                               x4, y4 );
+            this.aggiungi(a1);
+            i++;                 
+           }
+      
+         this.log();
+         System.out.println("lette correttamente " + i + " aule ok");
+        }
+       while(!rs.isLast());
+       con.close(); 
+      }
+      catch (Exception e)
+       {
+        e.printStackTrace();
+       }
+         
+    System.out.println("esco da leggiDB() piano="+myPiano);
     System.out.println("-------------------------");
   }
 }
