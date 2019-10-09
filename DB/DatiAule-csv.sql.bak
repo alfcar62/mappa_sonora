@@ -1,0 +1,21 @@
+CREATE TABLE DatiAule_csv (
+nomeaula VARCHAR(255) NULL,
+piano VARCHAR(255) NULL,
+dB VARCHAR(255) NULL,
+riverb VARCHAR(255) NULL,
+x1 VARCHAR(255) NULL,
+y1 VARCHAR(255) NULL,
+x2 VARCHAR(255) NULL,
+y2 VARCHAR(255) NULL,
+x3 VARCHAR(255) NULL,
+y3 VARCHAR(255) NULL,
+x4 VARCHAR(255) NULL,
+y4 VARCHAR(255) NULL
+);
+INSERT INTO DatiAule_csv (nomeaula,piano,dB,riverb,x1,y1,x2,y2,x3,y3,x4,y4) VALUES 
+( 'disegno1','2','10','5','139','415','186','415','186','529','139','529' ),
+( 'aula30','0','10','3','707','48','747','48','747','102','707','102' ),
+( 'palestra','0','20','3','108','49','252','49','252','223','108','223' ),
+( 'aula_magna','1','10','3','410','63','476','63','476','237','410','237' ),
+( '0308','3','43','4','608','138','641','138','641','208','608','208' ),
+( 'labinf','2','43','4','638','384','697','419','647','503','591','473' )

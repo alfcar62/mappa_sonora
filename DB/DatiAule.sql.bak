@@ -1,0 +1,28 @@
+
+CREATE DATABASE MAPPA_AVO;
+
+USE MAPPA_AVO;
+
+CREATE TABLE misure (
+nomeaula VARCHAR(255) NULL,
+piano INT NULL,
+dB INT NULL,
+riverb INT NULL,
+x1 INT NULL,
+y1 INT NULL,
+x2 INT NULL,
+y2 INT NULL,
+x3 INT NULL,
+y3 INT NULL,
+x4 INT NULL,
+y4 INT NULL
+);
+
+
+INSERT INTO misure (nomeaula,piano,dB,riverb,x1,y1,x2,y2,x3,y3,x4,y4) VALUES 
+( 'disegno1',2,10,5,139,415,186,415,186,529,139,529 ),
+( 'aula30',0,10,3,707,48,747,48,747,102,707,102 ),
+( 'palestra',0,20,3,108,49,252,49,252,223,108,223 ),
+( 'aula_magna',1,10,3,410,63,476,63,476,237,410,237 ),
+( '0308',3,43,4,608,138,641,138,641,208,608,208 ),
+( 'labinf',2,43,4,638,384,697,419,647,503,591,473 );
