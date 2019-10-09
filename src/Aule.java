@@ -135,8 +135,8 @@ public class Aule
    
 public void leggi(int piano) {
  
- //   leggiDaFile(piano);
-    leggiDaDB(piano);
+    leggiDaFile(piano);
+ //   leggiDaDB(piano);
 }
 
 /**  
